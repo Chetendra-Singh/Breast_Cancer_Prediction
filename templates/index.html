@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Breast Cancer Prediction System</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #0a0f1e;
+      --surface: #111827;
+      --surface2: #1a2235;
+      --border: rgba(255,255,255,0.07);
+      --border-hover: rgba(255,255,255,0.15);
+      --text: #f0f4ff;
+      --text-muted: #6b7fa3;
+      --text-faint: #3d4f6e;
+      --accent: #4f8ef7;
+      --accent-glow: rgba(79,142,247,0.15);
+      --green: #22c989;
+      --green-bg: rgba(34,201,137,0.08);
+      --green-border: rgba(34,201,137,0.25);
+      --red: #f05252;
+      --red-bg: rgba(240,82,82,0.08);
+      --red-border: rgba(240,82,82,0.25);
+      --radius: 10px;
+      --radius-lg: 16px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Background grid texture */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(79,142,247,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(79,142,247,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Top glow */
+    body::after {
+      content: '';
+      position: fixed;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 700px;
+      height: 400px;
+      background: radial-gradient(ellipse, rgba(79,142,247,0.12) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .wrapper {
+      position: relative;
+      z-index: 1;
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 4rem;
+    }
+
+    /* Header */
+    header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      animation: fadeDown 0.6s ease both;
+    }
+    .header-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-glow);
+      border: 1px solid rgba(79,142,247,0.2);
+      border-radius: 20px;
+      padding: 4px 14px;
+      margin-bottom: 1rem;
+    }
+    .header-tag::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: pulse 2s ease infinite;
+    }
+    h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      line-height: 1.15;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+    }
+    header p {
+      font-size: 15px;
+      color: var(--text-muted);
+      max-width: 520px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* Card */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      margin-bottom: 1.25rem;
+      animation: fadeUp 0.5s ease both;
+    }
+    .card:nth-child(2) { animation-delay: 0.08s; }
+    .card:nth-child(3) { animation-delay: 0.16s; }
+    .card:nth-child(4) { animation-delay: 0.24s; }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 1.25rem;
+    }
+    .section-icon {
+      width: 30px; height: 30px;
+      border-radius: 8px;
+      background: var(--accent-glow);
+      border: 1px solid rgba(79,142,247,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+    }
+    .section-title {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    /* Grid of inputs */
+    .feat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 10px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .field label {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-muted);
+      letter-spacing: 0.03em;
+    }
+    .field input {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      padding: 8px 11px;
+      width: 100%;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+      -moz-appearance: textfield;
+    }
+    .field input::-webkit-outer-spin-button,
+    .field input::-webkit-inner-spin-button { -webkit-appearance: none; }
+    .field input::placeholder { color: var(--text-faint); }
+    .field input:focus {
+      border-color: rgba(79,142,247,0.5);
+      box-shadow: 0 0 0 3px rgba(79,142,247,0.08);
+    }
+    .field input.filled { border-color: rgba(79,142,247,0.25); }
+
+    /* Actions */
+    .actions-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 1.25rem;
+      animation: fadeUp 0.5s 0.3s ease both;
+    }
+
+    .btn {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 10px 20px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: var(--surface2);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+      letter-spacing: 0.02em;
+    }
+    .btn:hover {
+      border-color: var(--border-hover);
+      color: var(--text);
+      background: var(--surface);
+    }
+    .btn-predict {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+      font-weight: 600;
+      padding: 10px 28px;
+    }
+    .btn-predict:hover { background: #3a7de8; border-color: #3a7de8; color: #fff; }
+    .btn-predict:active { transform: scale(0.98); }
+
+    .btn-benign { color: var(--green); border-color: var(--green-border); background: var(--green-bg); }
+    .btn-benign:hover { background: rgba(34,201,137,0.14); color: var(--green); }
+    .btn-malignant { color: var(--red); border-color: var(--red-border); background: var(--red-bg); }
+    .btn-malignant:hover { background: rgba(240,82,82,0.14); color: var(--red); }
+    .btn-clear { color: var(--text-faint); }
+
+    /* Result */
+    #result-section {
+      display: none;
+      animation: fadeUp 0.4s ease both;
+    }
+    #result-section.show { display: block; }
+
+    .result-card {
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      padding: 1.75rem;
+      background: var(--surface);
+      transition: all 0.4s;
+    }
+    .result-card.benign {
+      border-color: var(--green-border);
+      background: linear-gradient(135deg, var(--surface) 60%, var(--green-bg));
+    }
+    .result-card.malignant {
+      border-color: var(--red-border);
+      background: linear-gradient(135deg, var(--surface) 60%, var(--red-bg));
+    }
+
+    .result-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+    .result-verdict-wrap { display: flex; flex-direction: column; gap: 4px; }
+    .result-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .result-verdict {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.2rem;
+      font-weight: 400;
+      line-height: 1;
+    }
+    .result-verdict.benign { color: var(--green); }
+    .result-verdict.malignant { color: var(--red); }
+
+    .result-conf-wrap { text-align: right; }
+    .result-conf-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+    .result-conf-val {
+      font-size: 2.2rem;
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+    }
+    .result-conf-val.benign { color: var(--green); }
+    .result-conf-val.malignant { color: var(--red); }
+
+    .conf-bar-wrap { margin-bottom: 1rem; }
+    .conf-bar-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--text-faint);
+      margin-bottom: 5px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+    }
+    .conf-bar-track {
+      height: 6px;
+      background: var(--surface2);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .conf-bar-fill {
+      height: 100%;
+      border-radius: 3px;
+      transition: width 0.7s cubic-bezier(0.4,0,0.2,1);
+    }
+    .conf-bar-fill.benign { background: var(--green); }
+    .conf-bar-fill.malignant { background: var(--red); }
+
+    .result-disclaimer {
+      font-size: 12px;
+      color: var(--text-faint);
+      border-top: 1px solid var(--border);
+      padding-top: 1rem;
+      line-height: 1.6;
+    }
+
+    /* Error flash */
+    .flash {
+      background: var(--red-bg);
+      border: 1px solid var(--red-border);
+      color: var(--red);
+      border-radius: var(--radius);
+      padding: 10px 16px;
+      font-size: 13px;
+      margin-bottom: 1rem;
+      display: none;
+    }
+    .flash.show { display: block; }
+
+    /* Spinner */
+    .spinner { display: none; width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.7s linear infinite; }
+    .btn-predict.loading .btn-label { display: none; }
+    .btn-predict.loading .spinner { display: inline-block; }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      margin-top: 3rem;
+      font-size: 12px;
+      color: var(--text-faint);
+      animation: fadeUp 0.5s 0.4s ease both;
+    }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    @media (max-width: 600px) {
+      .feat-grid { grid-template-columns: repeat(2, 1fr); }
+      .actions-row { flex-direction: column; }
+      .btn { width: 100%; text-align: center; }
+      .result-top { flex-direction: column; }
+      .result-conf-wrap { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+<div class="wrapper">
+
+  <header>
+    <div class="header-tag">ML Diagnostic Tool</div>
+    <h1>Breast Cancer<br>Prediction System</h1>
+    <p>Enter values from a diagnostic imaging report across 30 cell nucleus features to receive an instant prediction.</p>
+  </header>
+
+  <!-- Flash error -->
+  <div class="flash" id="flash">Please fill in all 30 fields before predicting, or use a sample.</div>
+
+  <!-- Sample / action buttons -->
+  <div class="actions-row">
+    <button class="btn btn-predict" id="predict-btn" onclick="submitPrediction()">
+      <span class="btn-label">Run prediction</span>
+      <span class="spinner"></span>
+    </button>
+    <button class="btn btn-benign" onclick="loadSample('benign')">Load benign sample</button>
+    <button class="btn btn-malignant" onclick="loadSample('malignant')">Load malignant sample</button>
+    <button class="btn btn-clear" onclick="clearAll()">Clear all</button>
+  </div>
+
+  <!-- Section 1: Mean -->
+  <div class="card">
+    <div class="section-head">
+      <div class="section-icon">⌀</div>
+      <span class="section-title">Mean features</span>
+    </div>
+    <div class="feat-grid" id="mean-grid"></div>
+  </div>
+
+  <!-- Section 2: SE -->
+  <div class="card">
+    <div class="section-head">
+      <div class="section-icon">σ</div>
+      <span class="section-title">Standard error features</span>
+    </div>
+    <div class="feat-grid" id="se-grid"></div>
+  </div>
+
+  <!-- Section 3: Worst -->
+  <div class="card">
+    <div class="section-head">
+      <div class="section-icon">▲</div>
+      <span class="section-title">Worst features</span>
+    </div>
+    <div class="feat-grid" id="worst-grid"></div>
+  </div>
+
+  <!-- Result -->
+  <div id="result-section">
+    <div class="result-card" id="result-card">
+      <div class="result-top">
+        <div class="result-verdict-wrap">
+          <div class="result-eyebrow">Prediction result</div>
+          <div class="result-verdict" id="result-verdict">—</div>
+        </div>
+        <div class="result-conf-wrap">
+          <div class="result-conf-label">Confidence</div>
+          <div class="result-conf-val" id="result-conf">—</div>
+        </div>
+      </div>
+      <div class="conf-bar-wrap">
+        <div class="conf-bar-labels"><span>Benign</span><span>Malignant</span></div>
+        <div class="conf-bar-track">
+          <div class="conf-bar-fill" id="conf-bar" style="width:0%"></div>
+        </div>
+      </div>
+      <div class="result-disclaimer">
+        This tool is intended for educational and research purposes only. It does not constitute medical advice or replace clinical diagnosis by a qualified healthcare professional. Always consult a physician for medical decisions.
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    Wisconsin Diagnostic Breast Cancer Dataset &nbsp;·&nbsp; Random Forest Classifier &nbsp;·&nbsp; Flask + scikit-learn
+  </footer>
+
+</div>
+
+<script>
+  const FEATURES = {
+    mean: ["radius_mean","texture_mean","perimeter_mean","area_mean","smoothness_mean","compactness_mean","concavity_mean","concave_points_mean","symmetry_mean","fractal_dimension_mean"],
+    se:   ["radius_se","texture_se","perimeter_se","area_se","smoothness_se","compactness_se","concavity_se","concave_points_se","symmetry_se","fractal_dimension_se"],
+    worst:["radius_worst","texture_worst","perimeter_worst","area_worst","smoothness_worst","compactness_worst","concavity_worst","concave_points_worst","symmetry_worst","fractal_dimension_worst"]
+  };
+
+  const LABELS = {
+    radius_mean:"Radius",texture_mean:"Texture",perimeter_mean:"Perimeter",area_mean:"Area",smoothness_mean:"Smoothness",compactness_mean:"Compactness",concavity_mean:"Concavity",concave_points_mean:"Concave Points",symmetry_mean:"Symmetry",fractal_dimension_mean:"Fractal Dimension",
+    radius_se:"Radius",texture_se:"Texture",perimeter_se:"Perimeter",area_se:"Area",smoothness_se:"Smoothness",compactness_se:"Compactness",concavity_se:"Concavity",concave_points_se:"Concave Points",symmetry_se:"Symmetry",fractal_dimension_se:"Fractal Dimension",
+    radius_worst:"Radius",texture_worst:"Texture",perimeter_worst:"Perimeter",area_worst:"Area",smoothness_worst:"Smoothness",compactness_worst:"Compactness",concavity_worst:"Concavity",concave_points_worst:"Concave Points",symmetry_worst:"Symmetry",fractal_dimension_worst:"Fractal Dimension"
+  };
+
+  // WDBC: 0=Malignant (large aggressive cells), 1=Benign (small regular cells)
+  const BENIGN_SAMPLE = {
+    radius_mean:17.99,texture_mean:10.38,perimeter_mean:122.8,area_mean:1001,smoothness_mean:0.1184,compactness_mean:0.2776,concavity_mean:0.3001,concave_points_mean:0.1471,symmetry_mean:0.2419,fractal_dimension_mean:0.07871,
+    radius_se:1.095,texture_se:0.9053,perimeter_se:8.589,area_se:153.4,smoothness_se:0.006399,compactness_se:0.04904,concavity_se:0.05373,concave_points_se:0.01587,symmetry_se:0.03003,fractal_dimension_se:0.006193,
+    radius_worst:25.38,texture_worst:17.33,perimeter_worst:184.6,area_worst:2019,smoothness_worst:0.1622,compactness_worst:0.6656,concavity_worst:0.7119,concave_points_worst:0.2654,symmetry_worst:0.4601,fractal_dimension_worst:0.1189
+  };
+
+  const MALIGNANT_SAMPLE = {
+    radius_mean:12.32,texture_mean:12.39,perimeter_mean:78.85,area_mean:464.1,smoothness_mean:0.1028,compactness_mean:0.06981,concavity_mean:0.03987,concave_points_mean:0.0371,symmetry_mean:0.1959,fractal_dimension_mean:0.05955,
+    radius_se:0.2344,texture_se:0.578,perimeter_se:1.566,area_se:18.11,smoothness_se:0.00734,compactness_se:0.0128,concavity_se:0.01661,concave_points_se:0.01096,symmetry_se:0.02121,fractal_dimension_se:0.002415,
+    radius_worst:13.5,texture_worst:15.64,perimeter_worst:86.97,area_worst:549.1,smoothness_worst:0.1385,compactness_worst:0.1266,concavity_worst:0.1242,concave_points_worst:0.09391,symmetry_worst:0.2827,fractal_dimension_worst:0.06771
+  };
+
+  // Build input grids
+  Object.keys(FEATURES).forEach(group => {
+    const grid = document.getElementById(group + '-grid');
+    FEATURES[group].forEach(f => {
+      grid.innerHTML += `
+        <div class="field">
+          <label for="${f}">${LABELS[f]}</label>
+          <input type="number" step="any" id="${f}" name="${f}" placeholder="0.0000" oninput="markFilled(this)"/>
+        </div>`;
+    });
+  });
+
+  function markFilled(el) {
+    el.classList.toggle('filled', el.value !== '');
+  }
+
+  function loadSample(type) {
+    const data = type === 'benign' ? BENIGN_SAMPLE : MALIGNANT_SAMPLE;
+    Object.entries(data).forEach(([k, v]) => {
+      const el = document.getElementById(k);
+      if (el) { el.value = v; el.classList.add('filled'); }
+    });
+    hideFlash();
+  }
+
+  function clearAll() {
+    [...Object.values(FEATURES).flat()].forEach(f => {
+      const el = document.getElementById(f);
+      if (el) { el.value = ''; el.classList.remove('filled'); }
+    });
+    document.getElementById('result-section').classList.remove('show');
+    hideFlash();
+  }
+
+  function showFlash(msg) {
+    const f = document.getElementById('flash');
+    f.textContent = msg;
+    f.classList.add('show');
+  }
+  function hideFlash() {
+    document.getElementById('flash').classList.remove('show');
+  }
+
+  async function submitPrediction() {
+    hideFlash();
+    const allFeatures = [...Object.values(FEATURES).flat()];
+    const formData = {};
+    let missing = false;
+
+    allFeatures.forEach(f => {
+      const v = parseFloat(document.getElementById(f).value);
+      if (isNaN(v)) missing = true;
+      formData[f] = v;
+    });
+
+    if (missing) {
+      showFlash('Please fill in all 30 fields before predicting, or use a sample.');
+      return;
+    }
+
+    const btn = document.getElementById('predict-btn');
+    btn.classList.add('loading');
+    btn.disabled = true;
+
+    try {
+      const response = await fetch('/predict', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+
+      if (!response.ok) throw new Error('Server error: ' + response.status);
+      const data = await response.json();
+
+      displayResult(data);
+    } catch (err) {
+      showFlash('Prediction failed. Make sure the Flask server is running. (' + err.message + ')');
+    } finally {
+      btn.classList.remove('loading');
+      btn.disabled = false;
+    }
+  }
+
+  function displayResult(data) {
+    const isMalignant = data.prediction === 'Malignant';
+    const cls = isMalignant ? 'malignant' : 'benign';
+    const conf = Math.round((data.confidence || 0.5) * 100);
+
+    const section = document.getElementById('result-section');
+    const card = document.getElementById('result-card');
+    const verdict = document.getElementById('result-verdict');
+    const confVal = document.getElementById('result-conf');
+    const bar = document.getElementById('conf-bar');
+
+    card.className = 'result-card ' + cls;
+    verdict.className = 'result-verdict ' + cls;
+    verdict.textContent = data.prediction;
+    confVal.className = 'result-conf-val ' + cls;
+    confVal.textContent = conf + '%';
+
+    bar.className = 'conf-bar-fill ' + cls;
+    bar.style.width = '0%';
+
+    section.classList.add('show');
+    section.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+    // Animate bar after paint
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        bar.style.width = (isMalignant ? conf : 100 - conf) + '%';
+        if (isMalignant) {
+          bar.style.marginLeft = 'auto';
+        } else {
+          bar.style.marginLeft = '0';
+        }
+      }, 50);
+    });
+  }
+</script>
+</body>
+</html>
