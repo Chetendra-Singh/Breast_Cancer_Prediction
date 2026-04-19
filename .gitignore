@@ -2,11 +2,7 @@
 __pycache__/
 *.pyc
 
-# ML models
-*.pkl
 
-# Database
-*.db
 
 # Jupyter
 .ipynb_checkpoints/
