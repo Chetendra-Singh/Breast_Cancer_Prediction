@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register — OncoScan</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root{--navy:#0d2137;--rose:#c4476a;--rose2:#e05c7e;--cream:#fdf8f5;--white:#fff;--text:#1a2332;--muted:#5a6a82;--border:#e2e8f0;--err-bg:#fef2f2;--err-bdr:#fecaca;--err-txt:#b91c1c;--green:#1a7a4a;--green-bg:#f0faf4;--green-bdr:#a8d5ba;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'DM Sans',sans-serif;background:var(--cream);min-height:100vh;display:flex;flex-direction:column;}
+    nav{background:var(--navy);height:56px;display:flex;align-items:center;padding:0 2rem;justify-content:space-between;}
+    .nav-brand{display:flex;align-items:center;gap:8px;text-decoration:none;}
+    .nav-logo{width:30px;height:30px;background:var(--rose);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;}
+    .nav-name{font-family:'Playfair Display',serif;font-size:18px;color:#fff;}
+    nav a.back{color:rgba(255,255,255,0.6);font-size:13px;text-decoration:none;}
+    nav a.back:hover{color:#fff;}
+    .page{flex:1;display:flex;align-items:center;justify-content:center;padding:2rem;}
+    .card{background:var(--white);border:1px solid var(--border);border-radius:20px;box-shadow:0 4px 24px rgba(13,33,55,0.08);width:100%;max-width:480px;overflow:hidden;}
+    .card-top{background:linear-gradient(135deg,var(--navy),#1a3a55);padding:2rem 2rem 1.5rem;text-align:center;}
+    .card-icon{width:56px;height:56px;border-radius:16px;background:rgba(196,71,106,0.2);border:1px solid rgba(196,71,106,0.3);display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 1rem;}
+    .card-title{font-family:'Playfair Display',serif;font-size:24px;color:#fff;margin-bottom:4px;}
+    .card-sub{font-size:14px;color:rgba(255,255,255,0.55);font-weight:300;}
+    .card-body{padding:2rem;}
+    .error-box{background:var(--err-bg);border:1px solid var(--err-bdr);border-radius:8px;padding:10px 14px;font-size:13px;color:var(--err-txt);margin-bottom:1.25rem;}
+    .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+    .field{margin-bottom:1rem;}
+    .field label{display:block;font-size:12px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;}
+    .field input,.field select{width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:10px;font-size:14px;font-family:'DM Sans',sans-serif;color:var(--text);background:#fafbfc;outline:none;transition:all 0.2s;}
+    .field input:focus,.field select:focus{border-color:var(--rose);box-shadow:0 0 0 3px rgba(196,71,106,0.1);background:#fff;}
+    .field input::placeholder{color:#b0bec9;}
+    .pw-hint{font-size:11px;color:var(--muted);margin-top:4px;}
+    .benefits{background:var(--green-bg);border:1px solid var(--green-bdr);border-radius:10px;padding:12px 14px;margin-bottom:1.25rem;font-size:13px;color:var(--green);}
+    .benefits strong{display:block;margin-bottom:4px;font-size:12px;letter-spacing:0.04em;text-transform:uppercase;}
+    .benefits ul{list-style:none;display:flex;flex-direction:column;gap:3px;}
+    .benefits li::before{content:'✓ ';}
+    .btn-submit{width:100%;background:var(--rose);color:#fff;border:none;border-radius:10px;padding:12px;font-size:15px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;margin-top:0.5rem;}
+    .btn-submit:hover{background:var(--rose2);transform:translateY(-1px);}
+    .divider{text-align:center;font-size:13px;color:var(--muted);margin:1.25rem 0;}
+    .link-row{text-align:center;font-size:14px;color:var(--muted);}
+    .link-row a{color:var(--rose);text-decoration:none;font-weight:500;}
+    .link-row a:hover{text-decoration:underline;}
+    .skip-link{display:block;text-align:center;margin-top:0.75rem;font-size:13px;color:var(--muted);}
+    .skip-link a{color:var(--muted);text-decoration:none;}
+  </style>
+</head>
+<body>
+<nav>
+  <a class="nav-brand" href="/">
+    <div class="nav-logo">🎗</div>
+    <span class="nav-name">OncoScan</span>
+  </a>
+  <a class="back" href="/">← Back to home</a>
+</nav>
+
+<div class="page">
+  <div class="card">
+    <div class="card-top">
+      <div class="card-icon">🏥</div>
+      <div class="card-title">Create account</div>
+      <div class="card-sub">Free. No credit card required.</div>
+    </div>
+    <div class="card-body">
+      {% if error %}
+      <div class="error-box">⚠ {{ error }}</div>
+      {% endif %}
+
+      <div class="benefits">
+        <strong>With an account you get</strong>
+        <ul>
+          <li>Full case history saved permanently</li>
+          <li>Track all predictions by patient</li>
+          <li>Export and review past diagnoses</li>
+        </ul>
+      </div>
+
+      <form method="POST" action="/register">
+        <div class="row2">
+          <div class="field">
+            <label>Full Name</label>
+            <input type="text" name="name" placeholder="Dr. Jane Smith" required autocomplete="name"/>
+          </div>
+          <div class="field">
+            <label>Role</label>
+            <select name="role">
+              <option value="doctor">Doctor</option>
+              <option value="researcher">Researcher</option>
+              <option value="student">Medical Student</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label>Email address</label>
+          <input type="email" name="email" placeholder="doctor@hospital.com" required autocomplete="email"/>
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label>Password</label>
+            <input type="password" name="password" placeholder="Min. 6 characters" required autocomplete="new-password"/>
+          </div>
+          <div class="field">
+            <label>Confirm Password</label>
+            <input type="password" name="confirm" placeholder="Repeat password" required autocomplete="new-password"/>
+          </div>
+        </div>
+        <div class="pw-hint">Password must be at least 6 characters.</div>
+        <button type="submit" class="btn-submit">Create Account →</button>
+      </form>
+
+      <div class="divider">— or —</div>
+      <div class="link-row">Already have an account? <a href="/login">Sign in</a></div>
+      <div class="skip-link"><a href="/predict">→ Continue without account</a></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

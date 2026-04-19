@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>OncoScan — Breast Cancer Diagnostic System</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --navy:    #0d2137;
+      --navy2:   #1a3a55;
+      --rose:    #c4476a;
+      --rose2:   #e05c7e;
+      --rose-lt: #fce8ef;
+      --cream:   #fdf8f5;
+      --white:   #ffffff;
+      --text:    #1a2332;
+      --muted:   #5a6a82;
+      --border:  #e2e8f0;
+      --green:   #1a7a4a;
+      --green-bg:#f0faf4;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'DM Sans',sans-serif;color:var(--text);background:var(--cream);overflow-x:hidden;}
+
+    /* ── Nav ── */
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(13,33,55,0.97);backdrop-filter:blur(8px);height:64px;display:flex;align-items:center;padding:0 2rem;justify-content:space-between;}
+    .nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;}
+    .nav-logo{width:36px;height:36px;background:var(--rose);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;}
+    .nav-name{font-family:'Playfair Display',serif;font-size:22px;color:#fff;letter-spacing:0.02em;}
+    .nav-links{display:flex;align-items:center;gap:1.5rem;}
+    .nav-links a{color:rgba(255,255,255,0.7);text-decoration:none;font-size:14px;font-weight:500;transition:color 0.2s;}
+    .nav-links a:hover{color:#fff;}
+    .nav-btn{background:var(--rose);color:#fff!important;padding:8px 20px;border-radius:8px;font-weight:500!important;}
+    .nav-btn:hover{background:var(--rose2)!important;}
+    .nav-user{color:rgba(255,255,255,0.85)!important;font-size:13px;}
+
+    /* ── Hero ── */
+    .hero{min-height:100vh;background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 60%,#1e2d4a 100%);display:flex;align-items:center;padding:6rem 2rem 4rem;position:relative;overflow:hidden;}
+    .hero::before{content:'';position:absolute;top:-100px;right:-100px;width:600px;height:600px;background:radial-gradient(circle,rgba(196,71,106,0.15) 0%,transparent 70%);pointer-events:none;}
+    .hero::after{content:'';position:absolute;bottom:-80px;left:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(79,142,247,0.08) 0%,transparent 70%);pointer-events:none;}
+    .hero-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;}
+    .hero-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(196,71,106,0.15);border:1px solid rgba(196,71,106,0.3);border-radius:20px;padding:5px 14px;font-size:12px;font-weight:500;color:var(--rose2);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:1.25rem;}
+    .hero-tag::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--rose2);animation:blink 2s ease infinite;}
+    h1{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,4vw,3.4rem);font-weight:600;color:#fff;line-height:1.15;margin-bottom:1.25rem;}
+    h1 em{color:var(--rose2);font-style:italic;}
+    .hero-desc{font-size:16px;color:rgba(255,255,255,0.65);line-height:1.7;margin-bottom:2rem;font-weight:300;}
+    .hero-actions{display:flex;gap:12px;flex-wrap:wrap;}
+    .btn-hero-primary{background:var(--rose);color:#fff;padding:13px 28px;border-radius:10px;font-size:15px;font-weight:500;text-decoration:none;transition:all 0.2s;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;}
+    .btn-hero-primary:hover{background:var(--rose2);transform:translateY(-1px);}
+    .btn-hero-ghost{background:transparent;color:rgba(255,255,255,0.8);padding:13px 28px;border-radius:10px;font-size:15px;font-weight:500;text-decoration:none;border:1px solid rgba(255,255,255,0.2);transition:all 0.2s;}
+    .btn-hero-ghost:hover{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.4);}
+    .hero-stats{display:flex;gap:2rem;margin-top:2.5rem;}
+    .stat{display:flex;flex-direction:column;}
+    .stat-val{font-size:1.8rem;font-weight:700;color:#fff;font-family:'Playfair Display',serif;}
+    .stat-label{font-size:12px;color:rgba(255,255,255,0.5);font-weight:400;letter-spacing:0.04em;}
+
+    /* Hero visual */
+    .hero-visual{position:relative;display:flex;justify-content:center;animation:float 4s ease-in-out infinite;}
+    .hero-card{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:20px;padding:2rem;width:100%;max-width:380px;backdrop-filter:blur(4px);}
+    .hero-card-title{font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:1rem;}
+    .scan-ring{width:160px;height:160px;border-radius:50%;border:3px solid var(--rose);margin:0 auto 1.5rem;display:flex;align-items:center;justify-content:center;position:relative;animation:pulse-ring 3s ease infinite;}
+    .scan-ring::before{content:'';position:absolute;inset:-8px;border-radius:50%;border:1px solid rgba(196,71,106,0.3);}
+    .scan-ring::after{content:'';position:absolute;inset:-16px;border-radius:50%;border:1px solid rgba(196,71,106,0.15);}
+    .scan-inner{width:110px;height:110px;border-radius:50%;background:rgba(196,71,106,0.1);display:flex;align-items:center;justify-content:center;font-size:48px;}
+    .result-preview{display:flex;align-items:center;justify-content:space-between;background:rgba(26,122,74,0.12);border:1px solid rgba(26,122,74,0.25);border-radius:10px;padding:12px 16px;}
+    .result-preview-label{font-size:12px;color:rgba(255,255,255,0.5);}
+    .result-preview-val{font-size:18px;font-weight:600;color:#4ade80;}
+    .result-preview-conf{font-size:12px;color:rgba(255,255,255,0.5);}
+    .model-pills{display:flex;gap:6px;margin-top:12px;flex-wrap:wrap;}
+    .model-pill{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:3px 10px;font-size:11px;color:rgba(255,255,255,0.6);}
+
+    /* ── Section ── */
+    section{padding:5rem 2rem;}
+    .section-inner{max-width:1100px;margin:0 auto;}
+    .section-tag{font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--rose);margin-bottom:0.75rem;}
+    h2{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3vw,2.6rem);font-weight:600;color:var(--navy);line-height:1.2;margin-bottom:1rem;}
+    .section-sub{font-size:16px;color:var(--muted);line-height:1.7;max-width:560px;font-weight:300;}
+
+    /* ── Features ── */
+    .features-bg{background:var(--white);}
+    .features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem;margin-top:3rem;}
+    .feat-card{background:var(--cream);border:1px solid var(--border);border-radius:16px;padding:1.75rem;transition:all 0.25s;}
+    .feat-card:hover{border-color:var(--rose);transform:translateY(-3px);box-shadow:0 8px 24px rgba(196,71,106,0.1);}
+    .feat-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:1rem;}
+    .feat-icon.rose{background:var(--rose-lt);}
+    .feat-icon.navy{background:rgba(13,33,55,0.08);}
+    .feat-icon.green{background:var(--green-bg);}
+    .feat-title{font-size:16px;font-weight:600;color:var(--navy);margin-bottom:6px;}
+    .feat-desc{font-size:14px;color:var(--muted);line-height:1.65;}
+
+    /* ── How it works ── */
+    .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2rem;margin-top:3rem;position:relative;}
+    .step{text-align:center;padding:1.5rem;}
+    .step-num{width:52px;height:52px;border-radius:50%;background:var(--navy);color:#fff;font-family:'Playfair Display',serif;font-size:20px;font-weight:600;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;}
+    .step-title{font-size:15px;font-weight:600;color:var(--navy);margin-bottom:6px;}
+    .step-desc{font-size:13px;color:var(--muted);line-height:1.6;}
+
+    /* ── Models ── */
+    .models-bg{background:var(--navy);}
+    .models-bg h2{color:#fff;}
+    .models-bg .section-sub{color:rgba(255,255,255,0.55);}
+    .models-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-top:3rem;}
+    .model-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:1.75rem;transition:border-color 0.2s;}
+    .model-card:hover{border-color:var(--rose);}
+    .model-acc{font-size:2.2rem;font-weight:700;font-family:'Playfair Display',serif;color:var(--rose2);margin-bottom:4px;}
+    .model-name{font-size:14px;font-weight:600;color:#fff;margin-bottom:6px;}
+    .model-desc{font-size:13px;color:rgba(255,255,255,0.5);line-height:1.6;}
+    .model-tag{display:inline-block;margin-top:10px;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;background:rgba(196,71,106,0.15);color:var(--rose2);border:1px solid rgba(196,71,106,0.25);}
+
+    /* ── CTA ── */
+    .cta-bg{background:linear-gradient(135deg,var(--rose) 0%,#a0304f 100%);text-align:center;padding:5rem 2rem;}
+    .cta-bg h2{color:#fff;margin-bottom:1rem;}
+    .cta-bg p{color:rgba(255,255,255,0.75);font-size:16px;margin-bottom:2rem;font-weight:300;}
+    .btn-cta{background:#fff;color:var(--rose);padding:13px 32px;border-radius:10px;font-size:15px;font-weight:600;text-decoration:none;display:inline-block;transition:all 0.2s;}
+    .btn-cta:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.15);}
+    .btn-cta-ghost{background:transparent;color:rgba(255,255,255,0.85);padding:13px 28px;border-radius:10px;font-size:15px;font-weight:500;text-decoration:none;border:1px solid rgba(255,255,255,0.3);margin-left:12px;display:inline-block;transition:all 0.2s;}
+    .btn-cta-ghost:hover{background:rgba(255,255,255,0.1);}
+
+    /* ── Footer ── */
+    footer{background:var(--navy);color:rgba(255,255,255,0.4);text-align:center;padding:2rem;font-size:13px;}
+    footer a{color:rgba(255,255,255,0.5);text-decoration:none;}
+
+    @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-12px);}}
+    @keyframes blink{0%,100%{opacity:1;}50%{opacity:0.4;}}
+    @keyframes pulse-ring{0%,100%{box-shadow:0 0 0 0 rgba(196,71,106,0.2);}50%{box-shadow:0 0 0 12px rgba(196,71,106,0);}}
+
+    @media(max-width:768px){
+      .hero-inner{grid-template-columns:1fr;}
+      .hero-visual{display:none;}
+      .models-grid{grid-template-columns:1fr;}
+      nav .nav-links{gap:0.75rem;}
+    }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+  <a class="nav-brand" href="/">
+    <div class="nav-logo">🎗</div>
+    <span class="nav-name">OncoScan</span>
+  </a>
+  <div class="nav-links">
+    <a href="#features">Features</a>
+    <a href="#how">How it works</a>
+    <a href="#models">Models</a>
+    {% if user %}
+      <a href="/predict" class="nav-btn">Run Diagnosis</a>
+      <span class="nav-user">👤 {{ user.name }}</span>
+      <a href="/logout" style="color:rgba(255,255,255,0.5);font-size:13px;">Logout</a>
+    {% else %}
+      <a href="/login">Login</a>
+      <a href="/register" class="nav-btn">Get Started</a>
+    {% endif %}
+  </div>
+</nav>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-tag">
+        <span></span> AI-Powered Diagnostic Tool
+      </div>
+      <h1>Early Detection<br>Saves <em>Lives</em></h1>
+      <p class="hero-desc">OncoScan uses an ensemble of three machine learning models trained on the Wisconsin Diagnostic Breast Cancer dataset to assist clinicians in rapid, accurate breast cancer prediction from 30 cell nucleus measurements.</p>
+      <div class="hero-actions">
+        <a href="/predict" class="btn-hero-primary">🔬 Run Diagnosis</a>
+        <a href="/register" class="btn-hero-ghost">Create Account</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-val">96%+</span><span class="stat-label">Accuracy</span></div>
+        <div class="stat"><span class="stat-val">3</span><span class="stat-label">ML Models</span></div>
+        <div class="stat"><span class="stat-val">569</span><span class="stat-label">Training Cases</span></div>
+        <div class="stat"><span class="stat-val">30</span><span class="stat-label">Features</span></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-card">
+        <div class="hero-card-title">Live Prediction Preview</div>
+        <div class="scan-ring">
+          <div class="scan-inner">🔬</div>
+        </div>
+        <div class="result-preview">
+          <div>
+            <div class="result-preview-label">Result</div>
+            <div class="result-preview-val">Benign</div>
+          </div>
+          <div style="text-align:right">
+            <div class="result-preview-conf">Confidence</div>
+            <div class="result-preview-val">97%</div>
+          </div>
+        </div>
+        <div class="model-pills">
+          <div class="model-pill">✓ SVM</div>
+          <div class="model-pill">✓ Random Forest</div>
+          <div class="model-pill">✓ Logistic Reg.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Features -->
+<section class="features-bg" id="features">
+  <div class="section-inner">
+    <div class="section-tag">Why OncoScan</div>
+    <h2>Built for clinical clarity</h2>
+    <p class="section-sub">Every feature is designed around the needs of healthcare professionals who need fast, reliable, and explainable results.</p>
+    <div class="features-grid">
+      <div class="feat-card">
+        <div class="feat-icon rose">🤖</div>
+        <div class="feat-title">3-Model Ensemble</div>
+        <div class="feat-desc">SVM, Random Forest, and Logistic Regression vote together. The averaged probability is more reliable than any single model.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon navy">📄</div>
+        <div class="feat-title">PDF Report Upload</div>
+        <div class="feat-desc">Upload a diagnostic PDF and we automatically extract all 30 measurements. Manual entry also supported with clear field labels.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon green">🗂</div>
+        <div class="feat-title">Case History</div>
+        <div class="feat-desc">Every prediction you run is saved to your account with patient info, model votes, and confidence scores for audit and review.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon rose">🔐</div>
+        <div class="feat-title">Secure Login</div>
+        <div class="feat-desc">Register as a doctor or researcher. Your case history is private and tied to your account — no one else can see your patients.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon navy">📊</div>
+        <div class="feat-title">Confidence Scores</div>
+        <div class="feat-desc">See exactly how confident each model is, not just the final answer. Understand when the ensemble is uncertain before acting.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon green">⚕</div>
+        <div class="feat-title">Clinical Disclaimer</div>
+        <div class="feat-desc">Results are clearly marked as decision support only. The tool is designed to assist, not replace, pathological diagnosis.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How it works -->
+<section id="how">
+  <div class="section-inner" style="text-align:center">
+    <div class="section-tag">Process</div>
+    <h2>How it works</h2>
+    <p class="section-sub" style="margin:0 auto;">From measurement to result in seconds.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-title">Enter measurements</div>
+        <div class="step-desc">Input 30 cell nucleus features manually or upload a diagnostic PDF report.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-title">Ensemble runs</div>
+        <div class="step-desc">Three ML models — SVM, Random Forest, Logistic Regression — each predict independently.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-title">Result displayed</div>
+        <div class="step-desc">Benign or Malignant verdict shown with confidence score and individual model votes.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-title">Saved to history</div>
+        <div class="step-desc">If logged in, every case is stored with patient info for future reference and audit.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Models -->
+<section class="models-bg" id="models">
+  <div class="section-inner">
+    <div class="section-tag" style="color:var(--rose2)">Our Models</div>
+    <h2>Three models. One verdict.</h2>
+    <p class="section-sub">Each model brings different strengths. Together they reduce error and increase confidence.</p>
+    <div class="models-grid">
+      <div class="model-card">
+        <div class="model-acc">~97%</div>
+        <div class="model-name">Support Vector Machine</div>
+        <div class="model-desc">Finds the optimal hyperplane separating benign from malignant cells. Excellent at handling the high-dimensional 30-feature space.</div>
+        <span class="model-tag">RBF Kernel</span>
+      </div>
+      <div class="model-card">
+        <div class="model-acc">~96%</div>
+        <div class="model-name">Random Forest</div>
+        <div class="model-desc">200 decision trees voting together. Provides feature importance scores so you can see which measurements matter most.</div>
+        <span class="model-tag">200 Estimators</span>
+      </div>
+      <div class="model-card">
+        <div class="model-acc">~95%</div>
+        <div class="model-name">Logistic Regression</div>
+        <div class="model-desc">A fast, interpretable linear model. Acts as a strong baseline and balances the ensemble when tree models may overfit.</div>
+        <span class="model-tag">L2 Regularised</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-bg">
+  <h2>Ready to run a diagnosis?</h2>
+  <p>No account needed to start. Create one to save your case history.</p>
+  <a href="/predict" class="btn-cta">🔬 Start Predicting</a>
+  <a href="/register" class="btn-cta-ghost">Create Free Account</a>
+</div>
+
+<footer>
+  OncoScan &nbsp;·&nbsp; Wisconsin WDBC Dataset &nbsp;·&nbsp; For research & educational use only &nbsp;·&nbsp; Not a substitute for clinical diagnosis
+</footer>
+
+</body>
+</html>
