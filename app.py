@@ -4,7 +4,10 @@ from datetime import datetime
 import numpy as np
 
 app = Flask(__name__)
-app.secret_key = secrets.token_hex(32)
+
+# ── Secret key (use environment variable on Render) ────────────────────────────
+app.secret_key = os.environ.get("SECRET_KEY", secrets.token_hex(32))
+
 DB_PATH = "oncoscan.db"
 
 # ── Feature order ─────────────────────────────────────────────────────────────
@@ -276,56 +279,56 @@ def health():
     return jsonify({"status": "ok", "models": loaded, "scaler": scaler is not None})
 
 
+# ── PDF extraction (commented out — add after core deployment is stable) ───────
+# @app.route("/api/extract_pdf", methods=["POST"])
+# def extract_pdf():
+#     import io, re
+#     if "pdf" not in request.files:
+#         return jsonify({"error": "No PDF uploaded"}), 400
+#     pdf_bytes = request.files["pdf"].read()
+#     text = ""
+#     try:
+#         import pdfplumber
+#         with pdfplumber.open(io.BytesIO(pdf_bytes)) as pdf:
+#             for page in pdf.pages:
+#                 text += (page.extract_text() or "") + "\n"
+#     except Exception:
+#         pass
+#     if not text.strip():
+#         try:
+#             import pytesseract
+#             from pdf2image import convert_from_bytes
+#             for img in convert_from_bytes(pdf_bytes):
+#                 text += pytesseract.image_to_string(img) + "\n"
+#         except Exception as e:
+#             return jsonify({"error": "Install pdfplumber: pip install pdfplumber"}), 400
+#     if not text.strip():
+#         return jsonify({"error": "No text found in PDF."}), 400
+#     text = text.lower()
+#     name_map = {
+#         "radius mean":"radius_mean","texture mean":"texture_mean","perimeter mean":"perimeter_mean",
+#         "area mean":"area_mean","smoothness mean":"smoothness_mean","compactness mean":"compactness_mean",
+#         "concavity mean":"concavity_mean","concave points mean":"concave_points_mean",
+#         "symmetry mean":"symmetry_mean","fractal dimension mean":"fractal_dimension_mean",
+#         "radius se":"radius_se","texture se":"texture_se","perimeter se":"perimeter_se",
+#         "area se":"area_se","smoothness se":"smoothness_se","compactness se":"compactness_se",
+#         "concavity se":"concavity_se","concave points se":"concave_points_se",
+#         "symmetry se":"symmetry_se","fractal dimension se":"fractal_dimension_se",
+#         "radius worst":"radius_worst","texture worst":"texture_worst","perimeter worst":"perimeter_worst",
+#         "area worst":"area_worst","smoothness worst":"smoothness_worst","compactness worst":"compactness_worst",
+#         "concavity worst":"concavity_worst","concave points worst":"concave_points_worst",
+#         "symmetry worst":"symmetry_worst","fractal dimension worst":"fractal_dimension_worst",
+#     }
+#     features = {f: None for f in FEATURE_NAMES}
+#     num = r"[-+]?\d*\.?\d+"
+#     for readable, key in name_map.items():
+#         for term in [readable, readable.replace(" ","_")]:
+#             m = re.search(rf"{re.escape(term)}\s*[:\-=]?\s*({num})", text)
+#             if m:
+#                 try: features[key] = float(m.group(1)); break
+#                 except: pass
+#     return jsonify({"features": features})
+
+
 if __name__ == "__main__":
     app.run(debug=True)
-
-
-@app.route("/api/extract_pdf", methods=["POST"])
-def extract_pdf():
-    import io, re
-    if "pdf" not in request.files:
-        return jsonify({"error": "No PDF uploaded"}), 400
-    pdf_bytes = request.files["pdf"].read()
-    text = ""
-    try:
-        import pdfplumber
-        with pdfplumber.open(io.BytesIO(pdf_bytes)) as pdf:
-            for page in pdf.pages:
-                text += (page.extract_text() or "") + "\n"
-    except Exception:
-        pass
-    if not text.strip():
-        try:
-            import pytesseract
-            from pdf2image import convert_from_bytes
-            for img in convert_from_bytes(pdf_bytes):
-                text += pytesseract.image_to_string(img) + "\n"
-        except Exception as e:
-            return jsonify({"error": "Install pdfplumber: pip install pdfplumber"}), 400
-    if not text.strip():
-        return jsonify({"error": "No text found in PDF."}), 400
-
-    text = text.lower()
-    name_map = {
-        "radius mean":"radius_mean","texture mean":"texture_mean","perimeter mean":"perimeter_mean",
-        "area mean":"area_mean","smoothness mean":"smoothness_mean","compactness mean":"compactness_mean",
-        "concavity mean":"concavity_mean","concave points mean":"concave_points_mean",
-        "symmetry mean":"symmetry_mean","fractal dimension mean":"fractal_dimension_mean",
-        "radius se":"radius_se","texture se":"texture_se","perimeter se":"perimeter_se",
-        "area se":"area_se","smoothness se":"smoothness_se","compactness se":"compactness_se",
-        "concavity se":"concavity_se","concave points se":"concave_points_se",
-        "symmetry se":"symmetry_se","fractal dimension se":"fractal_dimension_se",
-        "radius worst":"radius_worst","texture worst":"texture_worst","perimeter worst":"perimeter_worst",
-        "area worst":"area_worst","smoothness worst":"smoothness_worst","compactness worst":"compactness_worst",
-        "concavity worst":"concavity_worst","concave points worst":"concave_points_worst",
-        "symmetry worst":"symmetry_worst","fractal dimension worst":"fractal_dimension_worst",
-    }
-    features = {f: None for f in FEATURE_NAMES}
-    num = r"[-+]?\d*\.?\d+"
-    for readable, key in name_map.items():
-        for term in [readable, readable.replace(" ","_")]:
-            m = re.search(rf"{re.escape(term)}\s*[:\-=]?\s*({num})", text)
-            if m:
-                try: features[key] = float(m.group(1)); break
-                except: pass
-    return jsonify({"features": features})
