@@ -20,75 +20,76 @@
     body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
 
     /* Nav */
-    nav{background:var(--navy);height:56px;display:flex;align-items:center;padding:0 1.5rem;justify-content:space-between;position:sticky;top:0;z-index:100;}
+    nav{background:var(--navy);height:56px;display:flex;align-items:center;padding:0 1.25rem;justify-content:space-between;position:sticky;top:0;z-index:100;}
     .nav-brand{display:flex;align-items:center;gap:8px;text-decoration:none;}
-    .nav-logo{width:30px;height:30px;background:var(--rose);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;}
+    .nav-logo{width:30px;height:30px;background:var(--rose);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
     .nav-name{font-family:'Playfair Display',serif;font-size:18px;color:#fff;}
-    .nav-right{display:flex;align-items:center;gap:1rem;font-size:13px;}
+    .nav-right{display:flex;align-items:center;gap:0.75rem;font-size:13px;}
     .nav-right a{color:rgba(255,255,255,0.65);text-decoration:none;transition:color 0.2s;}
     .nav-right a:hover{color:#fff;}
-    .nav-user{color:rgba(255,255,255,0.85);font-size:13px;}
-    .nav-btn-login{background:var(--rose);color:#fff!important;padding:6px 14px;border-radius:7px;}
+    .nav-user{color:rgba(255,255,255,0.85);font-size:13px;display:none;}
+    .nav-btn-login{background:var(--rose);color:#fff!important;padding:6px 14px;border-radius:7px;white-space:nowrap;}
 
     /* Layout */
-    .layout{max-width:1100px;margin:0 auto;padding:1.75rem 1.25rem 4rem;display:grid;grid-template-columns:1fr 340px;gap:1.25rem;align-items:start;}
+    .layout{max-width:1100px;margin:0 auto;padding:1.5rem 1.25rem 4rem;display:grid;grid-template-columns:1fr 320px;gap:1.25rem;align-items:start;}
     .main-col{display:flex;flex-direction:column;gap:1.25rem;}
     .side-col{display:flex;flex-direction:column;gap:1.25rem;}
 
     /* Cards */
     .card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow);overflow:hidden;}
-    .card-header{display:flex;align-items:center;gap:8px;padding:12px 18px;border-bottom:1px solid var(--border);background:var(--panel);}
+    .card-header{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--border);background:var(--panel);}
     .card-icon{width:26px;height:26px;border-radius:6px;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;}
     .card-title{font-size:12px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;color:var(--muted);}
-    .card-body{padding:18px;}
+    .card-body{padding:16px;}
 
     /* Mode tabs */
-    .mode-tabs{display:flex;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;width:fit-content;margin-bottom:1.25rem;}
-    .mode-tab{padding:7px 18px;font-size:13px;font-weight:500;cursor:pointer;background:var(--white);color:var(--muted);border:none;font-family:'DM Sans',sans-serif;transition:all 0.15s;}
+    .mode-tabs{display:flex;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;width:100%;margin-bottom:1.25rem;}
+    .mode-tab{flex:1;padding:9px 12px;font-size:13px;font-weight:500;cursor:pointer;background:var(--white);color:var(--muted);border:none;font-family:'DM Sans',sans-serif;transition:all 0.15s;text-align:center;}
     .mode-tab:not(:last-child){border-right:1px solid var(--border);}
     .mode-tab.active{background:var(--navy);color:#fff;}
 
     /* Patient grid */
-    .patient-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin-bottom:1.25rem;}
+    .patient-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-bottom:1.25rem;}
 
     /* Fields */
     .field{display:flex;flex-direction:column;gap:4px;}
     .field label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.04em;color:var(--muted);}
-    .field input,.field select{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:7px 10px;outline:none;transition:all 0.18s;-moz-appearance:textfield;}
+    .field input,.field select{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:8px 10px;outline:none;transition:all 0.18s;-moz-appearance:textfield;width:100%;}
     .field input::-webkit-outer-spin-button,.field input::-webkit-inner-spin-button{-webkit-appearance:none;}
     .field input::placeholder{color:var(--faint);}
     .field input:focus,.field select:focus{border-color:var(--rose);box-shadow:0 0 0 2px rgba(196,71,106,0.1);background:#fff;}
     .field input.auto-fill{background:#fff8f9;border-color:var(--rose-bdr);color:var(--rose);}
 
     /* Section divider */
-    .sec-div{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.09em;color:var(--faint);display:flex;align-items:center;gap:8px;margin:0 0 12px;}
+    .sec-div{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.09em;color:var(--faint);display:flex;align-items:center;gap:8px;margin:0 0 10px;}
     .sec-div::after{content:'';flex:1;height:1px;background:var(--border);}
 
     /* Feature grid */
-    .feat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:9px;margin-bottom:1.25rem;}
+    .feat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-bottom:1.25rem;}
 
     /* Upload */
-    .upload-zone{border:2px dashed var(--border2);border-radius:var(--radius-lg);padding:2rem;text-align:center;cursor:pointer;transition:all 0.2s;background:var(--panel);margin-bottom:1rem;}
+    .upload-zone{border:2px dashed var(--border2);border-radius:var(--radius-lg);padding:2rem 1rem;text-align:center;cursor:pointer;transition:all 0.2s;background:var(--panel);margin-bottom:1rem;}
     .upload-zone:hover,.upload-zone.over{border-color:var(--rose);background:var(--rose-lt);}
     .upload-icon{font-size:32px;margin-bottom:8px;}
     .upload-title{font-size:14px;font-weight:600;color:var(--navy);margin-bottom:3px;}
     .upload-sub{font-size:12px;color:var(--muted);}
     #pdf-input{display:none;}
-    .pdf-status{display:none;align-items:center;gap:8px;padding:9px 12px;border-radius:var(--radius);font-size:13px;margin-bottom:1rem;}
+    .pdf-status{display:none;align-items:center;gap:8px;padding:9px 12px;border-radius:var(--radius);font-size:13px;margin-bottom:1rem;line-height:1.4;}
     .pdf-status.ok{display:flex;background:var(--green-bg);border:1px solid var(--green-bdr);color:var(--green);}
     .pdf-status.err{display:flex;background:#fef2f2;border:1px solid #fecaca;color:#b91c1c;}
+    .pdf-note{font-size:12px;color:var(--muted);background:var(--amber-bg);border:1px solid var(--amber-bdr);border-radius:var(--radius);padding:8px 12px;margin-bottom:1rem;}
 
     /* Actions */
     .action-row{display:flex;flex-wrap:wrap;gap:8px;}
-    .btn{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;padding:9px 18px;border-radius:var(--radius);border:1px solid var(--border2);background:var(--white);color:var(--muted);cursor:pointer;transition:all 0.18s;}
+    .btn{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;padding:9px 16px;border-radius:var(--radius);border:1px solid var(--border2);background:var(--white);color:var(--muted);cursor:pointer;transition:all 0.18s;white-space:nowrap;}
     .btn:hover{background:var(--bg);color:var(--text);border-color:var(--navy2);}
     .btn-primary{background:var(--navy);color:#fff;border-color:var(--navy);font-weight:600;}
     .btn-primary:hover{background:var(--navy2);color:#fff;}
     .btn-primary:active{transform:scale(0.98);}
     .btn-b{color:var(--green);border-color:var(--green-bdr);background:var(--green-bg);}
-    .btn-b:hover{background:#d5f0e0;color:var(--green);}
+    .btn-b:hover{background:#d5f0e0;}
     .btn-m{color:var(--rose);border-color:var(--rose-bdr);background:var(--rose-lt);}
-    .btn-m:hover{background:#fad5e0;color:var(--rose);}
+    .btn-m:hover{background:#fad5e0;}
     .spinner{display:none;width:14px;height:14px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite;vertical-align:middle;margin-right:5px;}
     .btn-primary.loading .lbl{display:none;}
     .btn-primary.loading .spinner{display:inline-block;}
@@ -100,35 +101,35 @@
     /* Result */
     .result-card{border-radius:var(--radius-lg);border:1px solid var(--border);overflow:hidden;display:none;}
     .result-card.show{display:block;animation:fadeUp 0.4s ease;}
-    .result-head{padding:18px 20px;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:1rem;}
+    .result-head{padding:16px 18px;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:0.75rem;}
     .result-head.benign{background:var(--green-bg);border-bottom:1px solid var(--green-bdr);}
     .result-head.malignant{background:#fef2f2;border-bottom:1px solid #fecaca;}
     .result-eyebrow{font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:3px;}
-    .result-verdict{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:600;}
+    .result-verdict{font-family:'Playfair Display',serif;font-size:clamp(1.4rem,4vw,1.9rem);font-weight:600;}
     .result-verdict.benign{color:var(--green);}
     .result-verdict.malignant{color:var(--rose);}
-    .result-metrics{display:flex;gap:1.5rem;}
+    .result-metrics{display:flex;gap:1.25rem;}
     .rm-block{text-align:right;}
     .rm-label{font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:2px;}
-    .rm-val{font-size:1.6rem;font-weight:700;font-variant-numeric:tabular-nums;}
+    .rm-val{font-size:1.5rem;font-weight:700;}
     .rm-val.benign{color:var(--green);}
     .rm-val.malignant{color:var(--rose);}
-    .result-body{padding:18px 20px;background:var(--white);}
+    .result-body{padding:16px 18px;background:var(--white);}
     .conf-labels{display:flex;justify-content:space-between;font-size:11px;font-weight:600;color:var(--faint);letter-spacing:0.04em;margin-bottom:4px;}
     .conf-track{height:7px;background:var(--bg);border-radius:4px;overflow:hidden;border:1px solid var(--border);margin-bottom:14px;}
     .conf-fill{height:100%;border-radius:4px;transition:width 0.8s cubic-bezier(.4,0,.2,1);}
     .conf-fill.benign{background:var(--green);}
     .conf-fill.malignant{background:var(--rose);}
     .model-votes{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px;}
-    .mv{border:1px solid var(--border);border-radius:var(--radius);padding:10px 12px;text-align:center;}
+    .mv{border:1px solid var(--border);border-radius:var(--radius);padding:10px;text-align:center;}
     .mv-name{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--faint);margin-bottom:3px;}
-    .mv-pred{font-size:13px;font-weight:600;}
+    .mv-pred{font-size:12px;font-weight:600;}
     .mv-pred.benign{color:var(--green);}
     .mv-pred.malignant{color:var(--rose);}
     .mv-conf{font-size:11px;color:var(--faint);margin-top:1px;}
     .disclaimer{font-size:11px;color:var(--faint);border-top:1px solid var(--border);padding-top:12px;line-height:1.6;}
 
-    /* Sidebar: login prompt */
+    /* Sidebar */
     .login-prompt{background:linear-gradient(135deg,var(--navy),#1a3a55);border-radius:var(--radius-lg);padding:1.5rem;color:#fff;text-align:center;}
     .lp-icon{font-size:32px;margin-bottom:10px;}
     .lp-title{font-family:'Playfair Display',serif;font-size:18px;margin-bottom:6px;}
@@ -137,35 +138,48 @@
     .lp-btn:hover{background:var(--rose2);}
     .lp-btn-ghost{display:block;background:transparent;color:rgba(255,255,255,0.7);text-align:center;padding:9px;border-radius:8px;text-decoration:none;font-size:13px;border:1px solid rgba(255,255,255,0.2);transition:all 0.2s;}
     .lp-btn-ghost:hover{background:rgba(255,255,255,0.08);}
-
-    /* Sidebar: history */
     .history-list{display:flex;flex-direction:column;}
-    .history-item{padding:12px 16px;border-bottom:1px solid var(--border);transition:background 0.15s;cursor:default;}
+    .history-item{padding:12px 16px;border-bottom:1px solid var(--border);transition:background 0.15s;}
     .history-item:last-child{border-bottom:none;}
     .history-item:hover{background:var(--panel);}
-    .hi-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;}
-    .hi-name{font-size:13px;font-weight:500;color:var(--text);}
-    .hi-badge{font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;}
+    .hi-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;gap:6px;}
+    .hi-name{font-size:13px;font-weight:500;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+    .hi-badge{font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;flex-shrink:0;}
     .hi-badge.benign{background:var(--green-bg);color:var(--green);border:1px solid var(--green-bdr);}
     .hi-badge.malignant{background:#fef2f2;color:var(--rose);border:1px solid #fecaca;}
     .hi-meta{font-size:11px;color:var(--faint);}
     .empty-hist{text-align:center;color:var(--faint);padding:2rem 1rem;font-size:13px;}
     .hist-footer{padding:10px 16px;border-top:1px solid var(--border);background:var(--panel);}
     .hist-count{font-size:11px;color:var(--faint);}
-
-    /* Disclaimer sidebar */
     .disc-card{background:var(--amber-bg);border:1px solid var(--amber-bdr);border-radius:var(--radius-lg);padding:14px 16px;font-size:12px;color:var(--amber);line-height:1.6;}
     .disc-card strong{display:block;margin-bottom:4px;font-size:11px;letter-spacing:0.06em;text-transform:uppercase;}
 
     @keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
     @keyframes spin{to{transform:rotate(360deg);}}
 
-    @media(max-width:820px){
+    /* ── Responsive ── */
+    @media(max-width:860px){
       .layout{grid-template-columns:1fr;}
-      .side-col{order:-1;}
-      .model-votes{grid-template-columns:1fr;}
+      .side-col{order:2;}
+      .model-votes{grid-template-columns:repeat(3,1fr);}
     }
-    @media(max-width:500px){.feat-grid{grid-template-columns:repeat(2,1fr);}}
+    @media(max-width:600px){
+      .layout{padding:1rem 0.875rem 3rem;}
+      .patient-grid{grid-template-columns:1fr 1fr;}
+      .feat-grid{grid-template-columns:repeat(2,1fr);}
+      .action-row{flex-direction:column;}
+      .action-row .btn{width:100%;text-align:center;}
+      .model-votes{grid-template-columns:1fr;}
+      .result-head{flex-direction:column;}
+      .result-metrics{justify-content:flex-start;}
+      .rm-block{text-align:left;}
+      .nav-user{display:none;}
+      .nav-right{gap:0.5rem;}
+    }
+    @media(max-width:400px){
+      .patient-grid{grid-template-columns:1fr;}
+      .feat-grid{grid-template-columns:1fr 1fr;}
+    }
   </style>
 </head>
 <body>
@@ -188,7 +202,6 @@
 
 <div class="layout">
 
-  <!-- Main column -->
   <div class="main-col">
 
     <!-- Patient info -->
@@ -203,7 +216,7 @@
           <div class="field"><label>Patient ID</label><input type="text" id="patient_id" placeholder="PT-2024-001"/></div>
           <div class="field"><label>Full Name</label><input type="text" id="patient_name" placeholder="Patient name"/></div>
           <div class="field"><label>Age</label><input type="number" id="patient_age" placeholder="e.g. 45" min="1" max="120"/></div>
-          <div class="field"><label>Referring Physician</label><input type="text" id="physician" placeholder="Dr. Name"/></div>
+          <div class="field"><label>Physician</label><input type="text" id="physician" placeholder="Dr. Name"/></div>
           <div class="field"><label>Sample Date</label><input type="date" id="sample_date"/></div>
           <div class="field"><label>Notes</label><input type="text" id="notes" placeholder="Clinical notes"/></div>
         </div>
@@ -219,7 +232,6 @@
       <div class="card-body">
         <div class="flash" id="flash"></div>
 
-        <!-- Mode tabs -->
         <div class="mode-tabs">
           <button class="mode-tab active" onclick="switchMode('manual')">✏ Manual Entry</button>
           <button class="mode-tab" onclick="switchMode('pdf')">📄 Upload PDF</button>
@@ -227,6 +239,7 @@
 
         <!-- PDF panel -->
         <div id="pdf-panel" style="display:none">
+          <div class="pdf-note">📌 Works with <strong>text-based PDFs</strong> (typed lab reports). Scanned/handwritten PDFs are not supported yet — enter values manually in that case.</div>
           <div class="upload-zone" id="drop-zone"
                ondragover="event.preventDefault();this.classList.add('over')"
                ondragleave="this.classList.remove('over')"
@@ -250,7 +263,6 @@
           <div class="feat-grid" id="worst-grid"></div>
         </div>
 
-        <!-- Actions -->
         <div class="action-row">
           <button class="btn btn-primary" id="pred-btn" onclick="runPrediction()">
             <span class="spinner"></span>
@@ -294,7 +306,6 @@
   <!-- Sidebar -->
   <div class="side-col">
 
-    <!-- Login prompt OR history -->
     {% if user %}
     <div class="card">
       <div class="card-header">
@@ -315,13 +326,11 @@
     </div>
     {% endif %}
 
-    <!-- Disclaimer -->
     <div class="disc-card">
       <strong>⚠ Clinical Notice</strong>
       This tool uses the Wisconsin WDBC dataset. Results are for research and decision support only. Do not use as the sole basis for diagnosis. Always confirm with biopsy and specialist review.
     </div>
 
-    <!-- Model info -->
     <div class="card">
       <div class="card-header">
         <div class="card-icon">🤖</div>
@@ -329,24 +338,15 @@
       </div>
       <div class="card-body" style="display:flex;flex-direction:column;gap:10px;">
         <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:var(--panel);border-radius:var(--radius);border:1px solid var(--border);">
-          <div>
-            <div style="font-size:13px;font-weight:600;color:var(--text);">SVM</div>
-            <div style="font-size:11px;color:var(--faint);">RBF Kernel, C=10</div>
-          </div>
+          <div><div style="font-size:13px;font-weight:600;">SVM</div><div style="font-size:11px;color:var(--faint);">RBF Kernel, C=10</div></div>
           <div style="font-size:13px;font-weight:700;color:var(--rose);">~97%</div>
         </div>
         <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:var(--panel);border-radius:var(--radius);border:1px solid var(--border);">
-          <div>
-            <div style="font-size:13px;font-weight:600;color:var(--text);">Random Forest</div>
-            <div style="font-size:11px;color:var(--faint);">200 estimators</div>
-          </div>
+          <div><div style="font-size:13px;font-weight:600;">Random Forest</div><div style="font-size:11px;color:var(--faint);">200 estimators</div></div>
           <div style="font-size:13px;font-weight:700;color:var(--rose);">~96%</div>
         </div>
         <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:var(--panel);border-radius:var(--radius);border:1px solid var(--border);">
-          <div>
-            <div style="font-size:13px;font-weight:600;color:var(--text);">Logistic Regression</div>
-            <div style="font-size:11px;color:var(--faint);">L2 regularised</div>
-          </div>
+          <div><div style="font-size:13px;font-weight:600;">Logistic Regression</div><div style="font-size:11px;color:var(--faint);">L2 regularised</div></div>
           <div style="font-size:13px;font-weight:700;color:var(--rose);">~95%</div>
         </div>
       </div>
@@ -366,41 +366,42 @@
     radius_se:"Radius",texture_se:"Texture",perimeter_se:"Perimeter",area_se:"Area",smoothness_se:"Smoothness",compactness_se:"Compactness",concavity_se:"Concavity",concave_points_se:"Concave Pts",symmetry_se:"Symmetry",fractal_dimension_se:"Fractal Dim.",
     radius_worst:"Radius",texture_worst:"Texture",perimeter_worst:"Perimeter",area_worst:"Area",smoothness_worst:"Smoothness",compactness_worst:"Compactness",concavity_worst:"Concavity",concave_points_worst:"Concave Pts",symmetry_worst:"Symmetry",fractal_dimension_worst:"Fractal Dim."
   };
-  const BENIGN = {radius_mean:12.32,texture_mean:12.39,perimeter_mean:78.85,area_mean:464.1,smoothness_mean:0.1028,compactness_mean:0.06981,concavity_mean:0.03987,concave_points_mean:0.0371,symmetry_mean:0.1959,fractal_dimension_mean:0.05955,radius_se:0.2344,texture_se:0.578,perimeter_se:1.566,area_se:18.11,smoothness_se:0.00734,compactness_se:0.0128,concavity_se:0.01661,concave_points_se:0.01096,symmetry_se:0.02121,fractal_dimension_se:0.002415,radius_worst:13.5,texture_worst:15.64,perimeter_worst:86.97,area_worst:549.1,smoothness_worst:0.1385,compactness_worst:0.1266,concavity_worst:0.1242,concave_points_worst:0.09391,symmetry_worst:0.2827,fractal_dimension_worst:0.06771};
-  const MALIGNANT = {radius_mean:17.99,texture_mean:10.38,perimeter_mean:122.8,area_mean:1001,smoothness_mean:0.1184,compactness_mean:0.2776,concavity_mean:0.3001,concave_points_mean:0.1471,symmetry_mean:0.2419,fractal_dimension_mean:0.07871,radius_se:1.095,texture_se:0.9053,perimeter_se:8.589,area_se:153.4,smoothness_se:0.006399,compactness_se:0.04904,concavity_se:0.05373,concave_points_se:0.01587,symmetry_se:0.03003,fractal_dimension_se:0.006193,radius_worst:25.38,texture_worst:17.33,perimeter_worst:184.6,area_worst:2019,smoothness_worst:0.1622,compactness_worst:0.6656,concavity_worst:0.7119,concave_points_worst:0.2654,symmetry_worst:0.4601,fractal_dimension_worst:0.1189};
+  const BENIGN={radius_mean:12.32,texture_mean:12.39,perimeter_mean:78.85,area_mean:464.1,smoothness_mean:0.1028,compactness_mean:0.06981,concavity_mean:0.03987,concave_points_mean:0.0371,symmetry_mean:0.1959,fractal_dimension_mean:0.05955,radius_se:0.2344,texture_se:0.578,perimeter_se:1.566,area_se:18.11,smoothness_se:0.00734,compactness_se:0.0128,concavity_se:0.01661,concave_points_se:0.01096,symmetry_se:0.02121,fractal_dimension_se:0.002415,radius_worst:13.5,texture_worst:15.64,perimeter_worst:86.97,area_worst:549.1,smoothness_worst:0.1385,compactness_worst:0.1266,concavity_worst:0.1242,concave_points_worst:0.09391,symmetry_worst:0.2827,fractal_dimension_worst:0.06771};
+  const MALIGNANT={radius_mean:17.99,texture_mean:10.38,perimeter_mean:122.8,area_mean:1001,smoothness_mean:0.1184,compactness_mean:0.2776,concavity_mean:0.3001,concave_points_mean:0.1471,symmetry_mean:0.2419,fractal_dimension_mean:0.07871,radius_se:1.095,texture_se:0.9053,perimeter_se:8.589,area_se:153.4,smoothness_se:0.006399,compactness_se:0.04904,concavity_se:0.05373,concave_points_se:0.01587,symmetry_se:0.03003,fractal_dimension_se:0.006193,radius_worst:25.38,texture_worst:17.33,perimeter_worst:184.6,area_worst:2019,smoothness_worst:0.1622,compactness_worst:0.6656,concavity_worst:0.7119,concave_points_worst:0.2654,symmetry_worst:0.4601,fractal_dimension_worst:0.1189};
 
   // Build grids
-  Object.keys(FEATURES).forEach(grp => {
-    const g = document.getElementById(grp+'-grid');
-    FEATURES[grp].forEach(f => {
-      g.innerHTML += `<div class="field"><label>${LABELS[f]}</label><input type="number" step="any" id="${f}" placeholder="0.0000"/></div>`;
+  Object.keys(FEATURES).forEach(grp=>{
+    const g=document.getElementById(grp+'-grid');
+    FEATURES[grp].forEach(f=>{
+      g.innerHTML+=`<div class="field"><label>${LABELS[f]}</label><input type="number" step="any" id="${f}" placeholder="0.0000"/></div>`;
     });
   });
 
-  document.getElementById('sample_date').value = new Date().toISOString().split('T')[0];
+  document.getElementById('sample_date').value=new Date().toISOString().split('T')[0];
 
-  function switchMode(m) {
+  function switchMode(m){
     document.querySelectorAll('.mode-tab').forEach((t,i)=>t.classList.toggle('active',(m==='manual'&&i===0)||(m==='pdf'&&i===1)));
-    document.getElementById('pdf-panel').style.display = m==='pdf'?'block':'none';
+    document.getElementById('pdf-panel').style.display=m==='pdf'?'block':'none';
   }
 
-  function loadSample(t) {
-    const d = t==='benign'?BENIGN:MALIGNANT;
+  function loadSample(t){
+    const d=t==='benign'?BENIGN:MALIGNANT;
     Object.entries(d).forEach(([k,v])=>{const e=document.getElementById(k);if(e){e.value=v;e.classList.add('auto-fill');}});
     hideFlash();
   }
 
-  function clearAll() {
+  function clearAll(){
     [...Object.values(FEATURES).flat()].forEach(f=>{const e=document.getElementById(f);if(e){e.value='';e.classList.remove('auto-fill');}});
     ['patient_id','patient_name','patient_age','physician','notes'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
     document.getElementById('result-card').classList.remove('show');
+    const st=document.getElementById('pdf-status');st.className='pdf-status';
     hideFlash();
   }
 
   function showFlash(m){const f=document.getElementById('flash');f.textContent=m;f.classList.add('show');}
   function hideFlash(){document.getElementById('flash').classList.remove('show');}
 
-  function handleDrop(e) {
+  function handleDrop(e){
     e.preventDefault();
     document.getElementById('drop-zone').classList.remove('over');
     const file=e.dataTransfer.files[0];
@@ -408,29 +409,47 @@
     else showFlash('Please drop a PDF file.');
   }
 
-  async function handlePdf(file) {
+  async function handlePdf(file){
     if(!file)return;
     const st=document.getElementById('pdf-status');
-    st.className='pdf-status ok';st.textContent='⏳ Extracting from PDF...';
+    st.className='pdf-status ok';st.textContent='⏳ Extracting measurements from PDF...';
     const fd=new FormData();fd.append('pdf',file);
-    try {
+    try{
       const r=await fetch('/api/extract_pdf',{method:'POST',body:fd});
       const d=await r.json();
-      if(d.error)throw new Error(d.error);
+      if(d.error&&!d.features){throw new Error(d.error);}
+      if(d.error&&d.features){
+        // Scanned PDF message
+        st.className='pdf-status err';st.textContent='⚠ '+d.error;
+        return;
+      }
       let filled=0;
-      Object.entries(d.features).forEach(([k,v])=>{const e=document.getElementById(k);if(e&&v!==null){e.value=v;e.classList.add('auto-fill');filled++;}});
-      st.className='pdf-status ok';st.textContent=`✅ Extracted ${filled}/30 measurements from "${file.name}"`;
-    } catch(err){
-      st.className='pdf-status err';st.textContent='❌ Extraction failed: '+err.message;
+      Object.entries(d.features).forEach(([k,v])=>{
+        const e=document.getElementById(k);
+        if(e&&v!==null){e.value=v;e.classList.add('auto-fill');filled++;}
+      });
+      if(filled===0){
+        st.className='pdf-status err';
+        st.textContent='❌ No measurements found. Make sure your PDF has labeled values like "radius_mean: 17.5".';
+      } else {
+        st.className='pdf-status ok';
+        st.textContent=`✅ Extracted ${filled}/30 measurements from "${file.name}". ${30-filled} fields need manual entry.`;
+        // Switch to manual panel to show filled fields
+        switchMode('manual');
+        document.querySelectorAll('.mode-tab')[0].classList.add('active');
+        document.querySelectorAll('.mode-tab')[1].classList.remove('active');
+      }
+    }catch(err){
+      st.className='pdf-status err';st.textContent='❌ '+err.message;
     }
   }
 
-  async function runPrediction() {
+  async function runPrediction(){
     hideFlash();
     const allF=[...Object.values(FEATURES).flat()];
     const body={};let miss=false;
     allF.forEach(f=>{const v=parseFloat(document.getElementById(f).value);if(isNaN(v))miss=true;body[f]=v;});
-    if(miss){showFlash('Please fill in all 30 measurement fields.');return;}
+    if(miss){showFlash('Please fill in all 30 measurement fields before running diagnosis.');return;}
     body.patient={
       id:document.getElementById('patient_id').value,
       name:document.getElementById('patient_name').value,
@@ -441,19 +460,19 @@
     };
     const btn=document.getElementById('pred-btn');
     btn.classList.add('loading');btn.disabled=true;
-    try {
+    try{
       const r=await fetch('/api/predict',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
       if(!r.ok)throw new Error('Server error '+r.status);
       const d=await r.json();
       if(d.error)throw new Error(d.error);
       showResult(d);
       loadHistory();
-    } catch(e){showFlash('Prediction failed: '+e.message);}
+    }catch(e){showFlash('Prediction failed: '+e.message);}
     finally{btn.classList.remove('loading');btn.disabled=false;}
   }
 
-  function showResult(d) {
-    const cls=d.prediction==='Malignant'?'malignant':'benign';
+  function showResult(d){
+    const cls=d.prediction.toLowerCase().includes('malignant')?'malignant':'benign';
     const conf=Math.round(d.confidence*100);
     const agree=d.model_votes?d.model_votes.filter(v=>v.prediction===d.prediction).length:'—';
     document.getElementById('result-head').className='result-head '+cls;
@@ -465,34 +484,36 @@
     setTimeout(()=>{fill.style.width=(cls==='malignant'?conf:100-conf)+'%';},80);
     if(d.model_votes){
       document.getElementById('model-votes').innerHTML=d.model_votes.map(v=>{
-        const c=v.prediction==='Malignant'?'malignant':'benign';
-        return `<div class="mv"><div class="mv-name">${v.model}</div><div class="mv-pred ${c}">${v.prediction}</div><div class="mv-conf">${Math.round(v.confidence*100)}%</div></div>`;
+        const c=v.prediction.toLowerCase().includes('malignant')?'malignant':'benign';
+        return `<div class="mv"><div class="mv-name">${v.model}</div><div class="mv-pred ${c}">${v.prediction.split('(')[0].trim()}</div><div class="mv-conf">${Math.round(v.confidence*100)}%</div></div>`;
       }).join('');
     }
     const rc2=document.getElementById('result-card');rc2.classList.add('show');
     rc2.scrollIntoView({behavior:'smooth',block:'nearest'});
   }
 
-  async function loadHistory() {
+  async function loadHistory(){
     const container=document.getElementById('history-container');
     if(!container)return;
-    try {
+    try{
       const r=await fetch('/api/history');
       if(!r.ok)return;
       const d=await r.json();
       if(!d.cases||d.cases.length===0){
         container.innerHTML='<div class="empty-hist">No cases yet. Run a diagnosis first.</div>';return;
       }
-      container.innerHTML=`<div class="history-list">${d.cases.slice(0,8).map(c=>`
-        <div class="history-item">
+      container.innerHTML=`<div class="history-list">${d.cases.slice(0,8).map(c=>{
+        const cls=c.prediction.toLowerCase().includes('malignant')?'malignant':'benign';
+        return `<div class="history-item">
           <div class="hi-top">
             <div class="hi-name">${c.patient_name||c.patient_id||'Anonymous'}</div>
-            <span class="hi-badge ${c.prediction.toLowerCase()}">${c.prediction}</span>
+            <span class="hi-badge ${cls}">${cls==='malignant'?'Malignant':'Benign'}</span>
           </div>
-          <div class="hi-meta">${c.created_at} · ${Math.round(c.confidence*100)}% confidence</div>
-        </div>`).join('')}</div>
-        <div class="hist-footer"><span class="hist-count">${d.cases.length} total cases saved</span></div>`;
-    } catch(e){}
+          <div class="hi-meta">${c.created_at} · ${Math.round(c.confidence*100)}% conf.</div>
+        </div>`;
+      }).join('')}</div>
+      <div class="hist-footer"><span class="hist-count">${d.cases.length} total cases saved</span></div>`;
+    }catch(e){}
   }
 
   loadHistory();
