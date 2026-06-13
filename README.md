@@ -5,6 +5,10 @@ A machine learning-powered web application that predicts whether a tumor is **Be
 
 ---
 
+## 🌐 Live Demo
+
+> 🔗 **[Try it Live → oncoscan.onrender.com](https://oncoscan.onrender.com/)**
+
 ## 🚀 Features
 
 - 🧠 **ML-Based Prediction** (SVM, Random Forest, Logistic Regression)
