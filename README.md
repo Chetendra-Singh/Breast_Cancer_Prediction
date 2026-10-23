@@ -118,12 +118,7 @@ Always consult a certified medical professional.
 - 🌐 Deploy on cloud (Render / Railway)
 - 🎨 Enhanced UI/UX
 
-## 👨‍💻 Team
 
-- Chetendra Singh — https://github.com/Chetendra-Singh  
-- Charvi Gehija — https://github.com/charvigehija  
-- Chesta Bageria — https://github.com/chestabageria  
-- Aryan Prajapati — https://github.com/aryxnprajapati  
 
 ## ⭐ Support
 
